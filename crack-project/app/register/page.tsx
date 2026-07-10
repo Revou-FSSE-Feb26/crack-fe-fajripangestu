@@ -1,0 +1,108 @@
+import Link from "next/link";
+
+export default function RegisterPage() {
+  return (
+    <div className="min-h-screen bg-background px-6 py-16 text-text sm:px-8 lg:px-12">
+      <div className="mx-auto flex max-w-6xl overflow-hidden rounded-[32px] border border-border bg-surface shadow-[0_20px_60px_-20px_rgba(15,76,129,0.25)]">
+        <div className="hidden flex-1 flex-col justify-between bg-gradient-to-br from-secondary to-primary p-10 text-white lg:flex">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/80">
+              Daftar akun
+            </p>
+            <h1 className="mt-4 text-3xl font-semibold leading-tight">
+              Buat akun bisnis Anda dan mulai kolaborasi produksi.
+            </h1>
+            <p className="mt-4 max-w-md text-sm leading-7 text-white/80">
+              Dapatkan akses cepat untuk konsultasi, penawaran, dan pengelolaan proyek manufaktur Anda.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur">
+            <p className="text-sm font-semibold">Apa yang Anda dapatkan?</p>
+            <ul className="mt-3 space-y-2 text-sm text-white/80">
+              <li>• Informasi produk terbaru</li>
+              <li>• Penawaran khusus untuk mitra</li>
+              <li>• Dukungan tim industri yang cepat</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="flex-1 p-8 sm:p-10 lg:p-12">
+          <div className="mx-auto max-w-md">
+            <Link href="/" className="text-sm font-semibold text-primary hover:underline">
+              ← Kembali ke beranda
+            </Link>
+            <h2 className="mt-6 text-3xl font-semibold text-text">Daftar</h2>
+            <p className="mt-2 text-sm leading-7 text-slate-600">
+              Isi data berikut untuk membuat akun baru.
+            </p>
+
+            <form className="mt-8 space-y-5">
+              <div>
+                <label htmlFor="name" className="mb-2 block text-sm font-medium text-text">
+                  Nama lengkap
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  placeholder="Nama Anda"
+                  className="w-full rounded-2xl border border-border bg-background px-4 py-3 text-sm outline-none transition focus:border-primary"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="mb-2 block text-sm font-medium text-text">
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  className="w-full rounded-2xl border border-border bg-background px-4 py-3 text-sm outline-none transition focus:border-primary"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="password" className="mb-2 block text-sm font-medium text-text">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  placeholder="Buat password"
+                  className="w-full rounded-2xl border border-border bg-background px-4 py-3 text-sm outline-none transition focus:border-primary"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="confirmPassword" className="mb-2 block text-sm font-medium text-text">
+                  Konfirmasi password
+                </label>
+                <input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="Ulangi password"
+                  className="w-full rounded-2xl border border-border bg-background px-4 py-3 text-sm outline-none transition focus:border-primary"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5"
+              >
+                Buat Akun
+              </button>
+            </form>
+
+            <p className="mt-6 text-center text-sm text-slate-600">
+              Sudah punya akun?{' '}
+              <Link href="/login" className="font-semibold text-primary hover:underline">
+                Masuk di sini
+              </Link>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
