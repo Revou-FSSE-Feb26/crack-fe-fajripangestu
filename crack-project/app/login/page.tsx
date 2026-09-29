@@ -7,7 +7,7 @@ export default function LoginPage() {
         <div className="hidden flex-1 flex-col justify-between bg-gradient-to-br from-primary to-accent p-10 text-white lg:flex">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/80">
-              Mitra Mandiri
+              Manutics
             </p>
             <h1 className="mt-4 text-3xl font-semibold leading-tight">
               Masuk untuk mengelola kebutuhan manufaktur Anda.
