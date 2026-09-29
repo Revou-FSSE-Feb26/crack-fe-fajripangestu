@@ -1,6 +1,53 @@
+"use client";
+
 import Link from "next/link";
+import { FormEvent, useState } from "react";
 
 export default function RegisterPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setMessage("");
+
+    const formData = new FormData(event.currentTarget);
+    const name = String(formData.get("name") ?? "").trim();
+    const email = String(formData.get("email") ?? "").trim();
+    const password = String(formData.get("password") ?? "");
+    const confirmPassword = String(formData.get("confirmPassword") ?? "");
+
+    if (password !== confirmPassword) {
+      setMessage("Konfirmasi password tidak sama.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001"}/auth/register`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password }),
+        },
+      );
+      const result = (await response.json().catch(() => null)) as { message?: string } | null;
+
+      if (!response.ok) {
+        throw new Error(result?.message ?? "Pendaftaran gagal. Silakan coba lagi.");
+      }
+
+      setMessage("Pendaftaran berhasil. Silakan masuk ke akun Anda.");
+      event.currentTarget.reset();
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Terjadi kesalahan pada server.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
     <div className="min-h-screen bg-background px-6 py-16 text-text sm:px-8 lg:px-12">
       <div className="mx-auto flex max-w-6xl overflow-hidden rounded-[32px] border border-border bg-surface shadow-[0_20px_60px_-20px_rgba(15,76,129,0.25)]">
@@ -37,13 +84,15 @@ export default function RegisterPage() {
               Isi data berikut untuk membuat akun baru.
             </p>
 
-            <form className="mt-8 space-y-5">
+            <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="name" className="mb-2 block text-sm font-medium text-text">
                   Nama lengkap
                 </label>
                 <input
                   id="name"
+                  name="name"
+                  required
                   type="text"
                   placeholder="Nama Anda"
                   className="w-full rounded-2xl border border-border bg-background px-4 py-3 text-sm outline-none transition focus:border-primary"
@@ -56,6 +105,8 @@ export default function RegisterPage() {
                 </label>
                 <input
                   id="email"
+                  name="email"
+                  required
                   type="email"
                   placeholder="you@example.com"
                   className="w-full rounded-2xl border border-border bg-background px-4 py-3 text-sm outline-none transition focus:border-primary"
@@ -68,6 +119,8 @@ export default function RegisterPage() {
                 </label>
                 <input
                   id="password"
+                  name="password"
+                  required
                   type="password"
                   placeholder="Buat password"
                   className="w-full rounded-2xl border border-border bg-background px-4 py-3 text-sm outline-none transition focus:border-primary"
@@ -80,6 +133,8 @@ export default function RegisterPage() {
                 </label>
                 <input
                   id="confirmPassword"
+                  name="confirmPassword"
+                  required
                   type="password"
                   placeholder="Ulangi password"
                   className="w-full rounded-2xl border border-border bg-background px-4 py-3 text-sm outline-none transition focus:border-primary"
@@ -88,11 +143,14 @@ export default function RegisterPage() {
 
               <button
                 type="submit"
+                disabled={isLoading}
                 className="w-full rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5"
               >
-                Buat Akun
+                {isLoading ? "Mendaftarkan..." : "Buat Akun"}
               </button>
             </form>
+
+            {message && <p className="mt-4 text-center text-sm text-slate-600">{message}</p>}
 
             <p className="mt-6 text-center text-sm text-slate-600">
               Sudah punya akun?{' '}

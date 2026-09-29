@@ -48,7 +48,7 @@ export default function Home() {
               M
             </div>
             <div>
-              <p className="text-lg font-semibold text-text">Mitra Mandiri</p>
+              <p className="text-lg font-semibold text-text">Manutics</p>
               <p className="text-sm text-slate-500">Manufacturing Solutions</p>
             </div>
           </a>
